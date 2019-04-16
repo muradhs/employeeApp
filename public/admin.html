@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<title>Remco-Employee Directory</title>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="W3/W3.css">
+<script src="/AngularJs/angular.min.js"></script>
+<script src="/jsPDF/dist/jspdf.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="employeeCtrl">
+
+<div > 
+    
+<div >
+<div class="w3-bar w3-black w3-padding w3-card ">
+  <a href="/" class="w3-bar-item w3-button  w3-round">Search</a>
+  <input class="w3-bar-item w3-border w3-round-large" style="width:250px" type="text"ng-model="serach"></input>
+  <span class="w3-bar-item">Search by Department</span>
+  <select  name="department" class="w3-bar-item w3-border w3-round-large" style="width:300px" ng-model="bydepartment" required >
+    
+    <option value=>All Department</option>
+  <option value="Information Technology">Information Technology</option>
+  <option value="Sales">Sales</option>
+  <option value="Human Resources">Human Resource</option>
+  <option value="Transport">Transport</option>
+  <option value="Warehousing">Warehousing</option>
+  <option value="Management">Management</option>
+     <option value="Accounts and Finance">Accounts and Finance</option>
+</select>
+  <button onclick="document.getElementById('create').style.display='block'" class="w3-bar-item w3-button  w3-round w3-center">Create Employee</button>
+  <button onclick="makePdf()" class="w3-bar-item w3-button  w3-round w3-center">PDF</button>
+</div>  
+
+<div class="w3-container" ><br/></div>
+<div class="w3-cell-row  w3-left">
+  <div class="w3-container  w3-cell" style="padding-left: 95px; width:25%; ">
+    <div>
+<table>
+  <tr ng-repeat="x in names | filter:serach | filter:bydepartment"  >
+  <td><button style="width:250px; text-align:left;"class="w3-btn w3-white w3-border w3-round-large" ng-click="selectEmployee(x)">
+  <img class="w3-circle" src="{{ x.imgUrl }}"style="width:40px; height:40px;"></img><span class="w3-padding">{{ x.firstName }}   {{ x.lastName }}</span></button></td>
+  </tr>
+</table>
+    </div>
+    
+  
+  </div>
+ 
+ <div class="w3-container w3-cell" style="text-align: center;"> <div ng-show="selectedEmployee" class="w3-container w3-border w3-round-large " style="
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+width:400px">
+  <div  >
+    <header class="w3-container w3-black w3-round-large ">
+      <h2>{{ selectedEmployee.firstName }}   {{ selectedEmployee.lastName }}</h2><p><span>{{ selectedEmployee.position}}</span></p>
+    </header>
+ 
+     
+    </div>
+<center/><img src="{{selectedEmployee.imgUrl}}" height="120px" width="120px" >
+    <div class="w3-container w3-black">
+    <span class="w3-left"> Department </span><span class="w3-right">{{ selectedEmployee.deptName}}</span>
+    
+    
+    </div><div class="w3-container w3-white" ><br/></div>
+    <div class="w3-container w3-black">
+      <span class="w3-left"> Location </span><span class="w3-right">{{ selectedEmployee.locName}}</span>
+      
+      
+      </div><div class="w3-container w3-white" ><br/></div>
+    <div class="w3-container w3-black">
+    <span class="w3-left"> Extension</span><span class="w3-right">{{ selectedEmployee.extension}}</span>
+    </div><div class="w3-container w3-white" ><br/></div>
+    <div class="w3-container w3-black">
+    <span class="w3-left"> Company cell</span><span id="phoneNumber"class="w3-right">{{selectedEmployee.phone}}</span>
+    </div><div class="w3-container w3-white" ><br/></div>
+    <div class="w3-container w3-black">
+    <span class="w3-left"> Email</span><span class="w3-right">{{ selectedEmployee.email}}</span>
+     
+  </div>
+  <div class="w3-container w3-white" ><br/></div>
+  <div class="w3-container w3-white" ><button onclick="document.getElementById('delete').style.display='block'" class="w3-button w3-black w3-padding ">Delete</button>
+    <button onclick="document.getElementById('edit').style.display='block'"class="w3-button w3-black w3-padding ">Edit</button></div>
+  
+  </div>
+   <div style="width:80%" ng-if="!selectedEmployee"><center ><h1 w3-teal >This page is for creating,updating,editing and deleting Employees<h1></center></div></div>
+</div>
+   </div>
+ 
+   
+
+
+   <div id="create" class="w3-modal ">
+     <div class="w3-modal-content w3-round"style="max-width:600px" ><div class="w3-bar w3-black"><button class="w3-bar-item w3-black">New employee</button>
+      <button onclick="document.getElementById('create').style.display='none'"  class="w3-button w3-bar-item w3-black w3-right">X</button></div>
+       <div class="w3-container">
+         
+     
+        
+ 
+ 
+   <form action="/create" method="post" enctype="multipart/form-data">
+   <table>
+   <tr><td>First Name:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px" name="firstName" required></td></tr>
+   <tr><td>Last Name:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px" name="lastName" required ></td></tr>
+   <tr><td>Middle Name:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px"name="middleName" ></td></tr>
+   <tr><td>  Department:</td><td><select  name="department" class="w3-border w3-round-large" style="width:300px" required >
+    
+       <option value=>Choose Department</option>
+     <option value=1>Information Technology</option>
+     <option value=2>Human Resource</option>
+     <option value=3>Sales </option>
+     <option value=4>Transport</option>
+     <option value=5>Warehousing</option>
+     <option value=6>Management</option>
+     <option value=7>Accounts and Finance</option>
+
+   </select></td></tr>
+   <tr><td>Location:</td><td><select  name="location" class="w3-border w3-round-large"  style="width:300px"required >
+    
+       <option value=>Choose Location</option>
+     <option value=1>Orbitor</option>
+     <option value=2>Blair</option>
+     <option value=3>Montreal</option>
+     <option value=4>Vancouver</option><
+      
+
+     </select></td></tr>
+  
+     <tr><td>Extension:</td><td><input type="number" class="w3-border w3-round-large " style="width:300px" name="extension" ></td></tr>
+     
+     <tr><td>Position:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px" name="position" ></td></tr>
+     
+     <tr><td>Company Cellphone:</td><td><input type="tel" class="w3-border w3-round-large" style="width:300px" name="phone" pattern="\d{3}[\-]\d{3}[\-]\d{4}" ></td></tr>
+     <tr><td>Pattern:</td><td><b><span>123-456-7890</span></b></td></tr>
+     <tr><td>Email:</td><td><input type="email" class="w3-border w3-round-large" style="width:300px" name="email" required></td></tr>
+   
+     
+   </table>
+   <input type="file" name="avatar"accept="image/*" required><br/><br/>
+    <center><input  type="submit" style="width:300px" value="Submit"><br/></center>
+   
+ 
+   
+     
+ 
+   
+  
+    
+   </form>
+ 
+       </div>
+     <br/><div class="w3-footer w3-black"><br/></div>
+   </div>
+  </div>
+ 
+  <div id="edit" class="w3-modal">
+      <div class="w3-modal-content"style="max-width:600px" >
+        <div class="w3-bar w3-black"><button class="w3-bar-item w3-black">Edit employee</button>
+        <button onclick="document.getElementById('edit').style.display='none'"  class="w3-button w3-bar-item w3-black w3-right">X</button></div>
+         <div class="w3-container">
+
+            <form action="/edit" method="post" enctype="multipart/form-data">
+              <table>
+              <tr><td>First Name:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px" name="firstName" value="{{selectedEmployee.firstName}}" required></td></tr>
+              <tr><td>Last Name:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px" name="lastName"  value="{{selectedEmployee.lastName}}"required ></td></tr>
+              <tr><td>Middle Name:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px"name="middleName" value="{{selectedEmployee.middleName}}" ></td></tr>
+              <tr><td>  Department:</td><td><select  name="department" class="w3-border w3-round-large" style="width:300px" require>
+               
+                  <option value=>Choose Department</option>
+                <option value=1>Information Technology</option>
+                <option value=2>Human Resources</option>
+                <option value=3>Sales</option>
+                <option value=4>Transport</option>
+                <option value=5>Warehousing</option>
+                <option value=6>Management</option>
+     <option value=7>Accounts and Finance</option>
+              </select></td></tr>
+              <tr><td>Location:</td><td><select  name="location" class="w3-border w3-round-large"  style="width:300px" required >
+               
+                  <option value=>Choose Location</option>
+                <option value=1>Orbitor</option>
+                <option value=2>Blair</option>
+                <option value=3>Montreal</option>
+                <option value=4>Vancouver</option>
+                </select></td></tr>
+             
+                <tr><td>Extension:</td><td><input type="number" class="w3-border w3-round-large " style="width:300px" value="{{selectedEmployee.extension}}"name="extension" ></td></tr>
+                
+                <tr><td>Position:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px" name="position" value="{{selectedEmployee.position}}" ></td></tr>
+                
+                <tr><td>Company Cellphone:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px" name="phone" value="{{selectedEmployee.phone}}" pattern="\d{3}[\-]\d{3}[\-]\d{4}" ></td></tr>
+                <tr><td>Pattern:</td><td><b><span>123-456-7890</span></b></td></tr>
+                <tr><td>Email:</td><td><input type="email" class="w3-border w3-round-large" name="email" style="width:300px"  value="{{selectedEmployee.email}}" required></td></tr>
+                <input type="hidden" name="id" value={{selectedEmployee.id}}><input type="hidden" name="imgUrl" value={{selectedEmployee.imgUrl}}>
+                
+              </table>
+              <input type="file" name="avatar"accept="image/*" ><br/><br/> <img src="{{selectedEmployee.imgUrl}}" height="60px" width="60px"></img>
+               <center><input  type="submit" class="w3-button w3-black w3-right" value="Edit"><br/></center>
+              
+            
+              
+                
+            
+              
+             
+               
+            </form>
+            
+            
+          </div>
+          <br/><div class="w3-footer w3-black"><br/></div>
+      </div>
+     </div>
+     
+<div id="delete" class="w3-modal">
+        <div class="w3-modal-content"style="max-width:600px" >
+          <div class="w3-bar w3-black"><button class="w3-bar-item w3-black"><h5></b>Are you sure you want to delete this employee ?</b></h5></button>
+          <button onclick="document.getElementById('delete').style.display='none'"  class="w3-button w3-bar-item w3-black w3-right">X</button></div>
+           <div class="w3-container">
+
+<div><span><img class="w3-circle"src="{{selectedEmployee.imgUrl}}" height="100px" width="100px"></span><span class="w3-padding">{{selectedEmployee.firstName}} {{selectedEmployee.lastName}}</span></div>
+
+<center><form action="/delete" method="post" enctype="x-www-form-urlencoded"><input type="hidden" name="id" value={{selectedEmployee.id}}><input type="hidden" name="imgUrl" value={{selectedEmployee.imgUrl}}> <input type="submit" class="w3-button w3-black" value="Delete"></input></form></center>
+
+
+            </div>
+      </div>
+  </div>
+  
+</div>
+<div style="visibility: hidden" id="pdfWrap" > 
+
+    <table>
+        <thead></thead><tr><th>Name</th><th>Extension</th><th>Company Cell</th><th>Email</th></tr>
+    
+      <tr ng-repeat="x in names | orderBy: 'firstName' ">
+        <td>{{x.firstName}} {{x.lastName}}</td><td>{{x.extension}}</td><td>{{x.phone}}</td><td>{{x.email}}</td>
+      </tr>
+    </table>
+    
+    </div>
+  </div>
+  </div>
+  </body> 
+
+
+
+
+
+
+
+<script>
+var app = angular.module('myApp', []);
+
+app.controller('employeeCtrl', function($scope, $http) {
+    $http.get("/employees2")
+    .then(function (response) {$scope.names = response.data;
+    
+  });
+    
+    $scope.selectedEmployee=null;
+    $scope.selectEmployee = function (x) {
+          
+     $scope.selectedEmployee  =x; 
+    
+    }
+    
+    
+
+});
+</script>
+<script>
+
+var img= "data:image/png;base64,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";
+
+margins = {
+  top:60,
+  bottom: 40,
+  left: 40,
+  width: 600
+};
+
+var makePdf = function(){
+
+	var pdf = new jsPDF('p', 'pt', 'a4');
+	pdf.setFontSize(8);
+	pdf.fromHTML(document.getElementById('pdfWrap'), 
+		margins.left, // x coord
+		margins.top,
+		{
+			// y coord
+			width: margins.width// max width of content on PDF
+		},function(dispose) {
+			headerFooterFormatting(pdf, pdf.internal.getNumberOfPages());
+		}, 
+		margins);
+		
+	pdf.save('emp.pdf');
+};
+function headerFooterFormatting(doc, totalPages)
+{
+    for(var i = totalPages; i >= 1; i--)
+    {
+        doc.setPage(i);                            
+        //header
+        header(doc);
+        
+        footer(doc, i, totalPages);
+        doc.page++;
+    }
+};
+
+function header(doc)
+{
+    doc.setFontSize(14);
+    doc.setTextColor(40);
+    doc.setFontStyle('normal');
+	
+    if (img) {
+       doc.addImage(img, 'JPEG', margins.left, 20, 130,20);        
+    }
+	    
+    doc.text("Contact list", margins.left + 140, 35 );
+  doc.setLineCap(2);
+	doc.line(3, 50, margins.width + 43,50); // horizontal line
+};
+
+
+
+function footer(doc, pageNumber, totalPages){
+
+    var str = "Page " + pageNumber + " of " + totalPages
+   
+    doc.setFontSize(10);
+    doc.text(str, margins.left, doc.internal.pageSize.height - 20);
+    
+};
+
+</script>
+
+</body>
+</html>

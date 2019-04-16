@@ -1,0 +1,71 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="W3/W3.css">
+<body>
+
+
+<center><h1>A new record has been created</h1></center>
+<center><button class="w3-black w3-button " onclick="window.location.href='/admin'">BACK TO HOME PAGE</button><br>
+    <br/><button onclick="document.getElementById('create').style.display='block'" class="w3-black w3-button ">Create Employee</button></center>
+
+    
+    <div id="create" class="w3-modal ">
+      <div class="w3-modal-content w3-round"style="max-width:600px" ><div class="w3-bar w3-black"><button class="w3-bar-item w3-black">New employee</button>
+       <button onclick="document.getElementById('create').style.display='none'"  class="w3-button w3-bar-item w3-black w3-right">X</button></div>
+        <div class="w3-container">
+          
+      
+         
+  
+  
+    <form action="/create" method="post" enctype="multipart/form-data">
+    <table>
+    <tr><td>First Name:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px" name="firstName" required></td></tr>
+    <tr><td>Last Name:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px" name="lastName" required ></td></tr>
+    <tr><td>Middle Name:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px"name="middleName" ></td></tr>
+    <tr><td>  Department:</td><td><select  name="department" class="w3-border w3-round-large" style="width:300px" required >
+     
+        <option value=>Choose Department</option>
+      <option value=1>Information Technology</option>
+      <option value=2>Human Resource</option>
+      <option value=3>Sales </option>
+      <option value=4>Transport</option>
+      <option value=5>Warehousing</option>
+      <option value=6>Management</option>
+     <option value=7>Accounts and Finance</option>
+    </select></td></tr>
+    <tr><td>Location:</td><td><select  name="location" class="w3-border w3-round-large"  style="width:300px"required >
+     
+        <option value=>Choose Location</option>
+      <option value=1>Orbitor</option>
+      <option value=2>Blair</option>
+      <option value=3>Montreal</option>
+      <option value=4>Vancouver</option>
+      </select></td></tr>
+   
+      <tr><td>Extension:</td><td><input type="number" class="w3-border w3-round-large " style="width:300px" name="extension" ></td></tr>
+      
+      <tr><td>Position:</td><td><input type="text" class="w3-border w3-round-large" style="width:300px" name="position" ></td></tr>
+      
+      <tr><td>Company Cellphone:</td><td><input type="tel" class="w3-border w3-round-large" style="width:300px" name="phone" pattern="\d{3}[\-]\d{3}[\-]\d{4}" ></td></tr>
+      <tr><td>Pattern:</td><td><b><span>123-456-7890</span></b></td></tr>
+      <tr><td>Email:</td><td><input type="email" class="w3-border w3-round-large" style="width:300px" name="email" required></td></tr>
+    
+      
+    </table>
+    <input type="file" name="avatar"accept="image/*" required><br/><br/>
+     <center><input  type="submit" style="width:300px" value="Submit"><br/></center>
+    
+  
+    
+      
+  
+    
+   
+     
+    </form>
+  
+        </div>
+      <br/><div class="w3-footer w3-black"><br/></div>
+    </div>
+   </div>
+  

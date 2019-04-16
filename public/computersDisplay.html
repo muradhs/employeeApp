@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<title>Display All Computers</title>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="W3/W3.css">
+<script src="/AngularJs/angular.min.js"></script>
+<script src="/jsPDF/dist/jspdf.min.js"></script>
+<style>
+.f{
+
+    font-size:12px;
+}
+
+</style>
+</head>
+
+<body ng-app="itApp" ng-controller="itCtrl">
+
+    <div class="w3-padding">
+
+            <div class="w3-container w3-card w3-padding">
+  
+
+                    <table  class="w3-table w3-striped">
+                      <tr class=" w3-black f">
+                        <th>Asset ID </th>
+                        <th>Is Active?</th>
+                        <th>Catagory</th>
+                           <th>Serial</th>
+                        <th>Manufacturer</th>
+                        <th>Model </th>
+                        <th>Location </th>
+                        <th>Department </th>
+                        <th>Entered By</th>
+                        <th>Assigned To</th>
+                        <th>Replaced With </th>
+                        <th>Date </th>
+                      </tr>
+                      <tr ng-repeat="cm in cms" class="f">
+                        <td>{{cm.assetId}}</td>
+                          <td>{{cm.isActive}}</td>
+                            <td>{{cm.catagory}}</td>
+                              <td>{{cm.serial}}</td>
+                                <td>{{cm.make}}</td>
+                                  <td>{{cm.model}}</td>
+                                  <td>{{cm.location}}</td>
+                                    <td>{{cm.department}}</td>
+                                      <td>{{cm.enteredby}}</td>  
+                                      <td>{{cm.assignedTo}}</td>
+                                        <td>{{cm.replacedwith}}</td>
+                                          <td>{{cm.date}}</td>
+                                      
+                      </tr>  
+                   
+                      
+                    </table>
+                  </div>
+
+    </div>
+
+
+        <script>
+                var app = angular.module('itApp', []);
+                
+                app.controller('itCtrl', function($scope, $http) {
+                    $http.get("/allComputers")
+                    .then(function (response) {$scope.cms = response.data;
+                    
+                  });
+                    
+                    $scope.selectedComputer=null;
+                    $scope.selectedComputer = function (x) {
+                          
+                     $scope.selectedEmployee  =x; 
+                    
+                    }
+                    
+                    
+                
+                });
+                </script>
+
+
+
+
+</body>
+
+
+
+</html>

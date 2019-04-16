@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<title>Computer Data Entry Form</title>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="W3/W3.css">
+<script src="/AngularJs/angular.min.js"></script>
+<script src="/jsPDF/dist/jspdf.min.js"></script>
+<style>
+form label {font-weight:bold}
+</style>
+</head>
+<body>
+        <br/><br/>
+        <div class="w3-container" style="width:60% ; margin:auto;">
+        <div class="w3-card w3-animate-zoom">
+        <div class="w3-container  w3-black">
+          <h2>Computer Input Form</h2>
+        </div>
+        
+        <form class="w3-container w3-margin" action="/createComputer" method="post" enctype="x-www-form-urlencoded">
+        <div class="w3-row-padding">
+            <div class="w3-half">
+          <p>
+          <label>Asset Id</label>
+          <input class="w3-input w3-border w3-round-large" type="text" name="assetId"required></p>
+          <p>
+          <label>Is Active ?</label>
+          <select class="w3-select w3-border w3-round-large" name="isActive">
+                <option value="" disabled selected>Choose your option</option>
+                <option value=1>True</option>
+                <option value=0>False</option>
+         </select></p>
+          <p>
+          <label>Catagory</label>
+          <select class="w3-select w3-border w3-round-large" name="catagory" required>
+                <option value="" disabled selected>Choose your option</option>
+                <option value="Computer">Computer</option>
+                <option value="Laptop">Laptop</option>
+         </select></p>
+          <p>
+          <label>Location</label>
+          <select class="w3-select w3-border w3-round-large" name="location">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="Orbitor">Orbitor</option>
+          <option value="Blair">Blair</option>
+          <option value="Montreal">Montreal</option>
+          <option value="Vancouver">Vancouver</option>
+        </select></p>
+          
+          <p><label>Entered By</label>
+          <select class="w3-select w3-border w3-round-large" name="enteredBy">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="Kush Dewan">Kush Dewan</option>
+          <option value="Shailinder Sharma">Sailinder Sharma</option>
+          <option value="Elias Sabbagh">Elias Sabbagh</option>
+          <option value="Jashan Sidhu">Jahsan Sidhu</option>
+        </select></p>
+          <p><label>Replaced With</label>
+          <input class="w3-input w3-border w3-round-large " type="text" name="replacedWith" ></p>
+              </div>
+            
+            
+            <div class="w3-half">
+          <p>
+          <label>Serial</label>
+          <input name="serial" class="w3-input w3-border w3-round-large" type="text" ></p>
+          <p>
+          <label>Manufacturer</label>
+          <input name="make" class="w3-input w3-border w3-round-large" type="text" ></p>
+          <p>
+          <label>Model</label>
+          <input name="model" class="w3-input w3-border w3-round-large " type="text" ></p>
+          <p>
+          <label>Department</label>
+          <select class="w3-select w3-border w3-round-large" name="department" required>
+          <option value="" disabled selected>Choose your option</option>
+          <option value="Management">Management</option>
+          <option value="IT">IT</option>
+          <option value="Transport">Transport</option>
+          <option value="Warehousing">Warehousing</option>
+          <option value="Finance and Accounting">Finance & Accounting</option>
+        </select></p>
+          <label>Assigned To</label>
+          <input class="w3-input w3-border w3-round-large " type="text" name="assignedTo"required></p>
+          <p><label>Date</label>
+          <input class="w3-input w3-border w3-round-large " type="date" name="date" id="datePicker"></p>
+          
+              </div>
+            <div style="text-align:center;"><p >
+          <input class="w3-button   w3-black w3-round-large " type="submit" value="Submit"></p></div>
+            <br/>
+         </div>
+        
+        
+        </form>
+        </div>
+        </div>
+        <script>
+        document.getElementById('datePicker').valueAsDate = new Date();
+        </script>
+        
+        </body>
+        </html> 

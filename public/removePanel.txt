@@ -1,0 +1,11 @@
+<style>
+#s4-leftpanel
+{
+ display:none;
+}
+.s4-ca
+{
+ margin-left: 5px;
+ background: transparent;
+}
+</style>

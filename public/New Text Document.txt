@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<div ng-app="myApp" ng-controller="customersCtrl"> 
+<div >
+<div class="w3-container w3-teal">
+  <h1>Employee Search</h1>
+
+</div>
+<div class="w3-container w3-white" ><br/></div>
+<div class="w3-cell-row">
+  <div class="w3-container  w3-cell">
+    <div>
+    <label>Search :</label><input class="w3-border w3-round-large"type="text"ng-model="serach"></input><div class="w3-container w3-white" ><br/></div>
+<table>
+  <tr ng-repeat="x in names | filter:serach "  >
+  <td><button style="width:250px; text-align:left;"class="w3-btn w3-white w3-border w3-round-large" ng-click="selectEmployee(x)">
+  {{ x.firstName }}   {{ x.lastName }}</button></td>
+  </tr>
+</table>
+    </div></div>
+
+  <div ng-show="selectedEmployee" class="w3-container w3-border w3-round-large w3-cell w3-left" style="width:400px">
+  <div class="" >
+    <header class="w3-container w3-teal w3-round-large ">
+      <h2>{{ selectedEmployee.firstName }}   {{ selectedEmployee.lastName }}</h1>
+    </header>
+ 
+     
+    </div>
+<center/><img src="{{selectedEmployee.url}}" height="120px" width="120px" >
+    <div class="w3-container w3-teal">
+    <span class="w3-left"> Department </span>
+    </div><div class="w3-container w3-white" ><br/></div>
+    <div class="w3-container w3-teal">
+    <span class="w3-left"> Position </span>
+    </div><div class="w3-container w3-white" ><br/></div>
+    <div class="w3-container w3-teal">
+    <span class="w3-left"> Extension</span>
+    </div><div class="w3-container w3-white" ><br/></div>
+    <div class="w3-container w3-teal">
+    <span class="w3-left"> Company cell</span>
+    </div><div class="w3-container w3-white" ><br/></div>
+    <div class="w3-container w3-teal">
+    <span class="w3-left"> Email</span>
+    </div><div class="w3-container w3-white" ><br/></div>
+  </div>
+   
+</div>
+   </div>
+ 
+
+
+
+
+
+
+
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+    $http.get("http://localhost:3000/employees")
+    .then(function (response) {$scope.names = response.data;});
+    $scope.selectedEmployee=null;
+    $scope.selectEmployee = function (x) {
+          
+     $scope.selectedEmployee  =x; 
+    
+    }
+});
+</script>
+
+</body>
+</html>
